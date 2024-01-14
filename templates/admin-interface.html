@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+    <form action="/stock" method="post">
+        <button type="submit">Stock Management</button>
+    </form>
+    <form action="/loyalclients" method="post">
+        <button type="submit">Clients Loyaux</button>
+    </form>
+    <form action="/reservations" method="post">
+        <button type="submit">Réservations en cours</button>
+    </form>
+</body>
+</html>
+{% endblock %}

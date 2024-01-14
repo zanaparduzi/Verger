@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Se connecter</h2>
+    <div id="loginSection">
+        <form id="loginForm" action="/login2" method="post">
+            <input type="text" id="username" name="username" placeholder="Enter username">
+            <input type="password" id="password" name="password" placeholder="Enter password">
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    <p>Vous n'avez pas de compte chez nous ? Inscrivez-vous ici :</p>
+    <form action="/register" method="post">
+        <button type="submit">S'inscrire</button>
+    </form>
+
+</body>
+</html>
+{% endblock %}

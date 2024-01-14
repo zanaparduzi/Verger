@@ -1,0 +1,68 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8f7; /* Light greenish background color */
+    color: #333; /* Dark text color */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    width: 90%;
+}
+
+h1 {
+    color: #2e7d32; /* Green header color */
+}
+
+p {
+    color: #4caf50; /* Green paragraph text color */
+}
+
+div {
+    background-color: #e8f5e9; /* Light green background color for div */
+    border: 1px solid #81c784; /* Border color */
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4caf50; /* Green button background color */
+    color: white; /* Button text color */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #388e3c; /* Darker green on hover */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #81c784; /* Table border color */
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Add more specific styles as needed for other elements or classes */

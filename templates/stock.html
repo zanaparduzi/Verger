@@ -1,0 +1,192 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h2>Stock Management</h2>
+    <div class="stock-buttons">
+        <button onclick="toggleTable('tableFruits')" class="reserverbutton">Fruits</button>
+        <button onclick="toggleTable('tableLegumes')" class="reserverbutton">Légumes</button>
+        <button onclick="toggleTable('tableProduitsExternes')" class="reserverbutton">Produits Externes</button>
+        <button onclick="toggleTable('tableCommandesFournisseurs')" class="reserverbutton">Commandes aux Fournisseurs</button>
+        <button onclick="navigateToDeclarerVente()" class="reserverbutton">Déclarer Vente</button>
+    </div>
+    <table id="tableFruits" class="stock-table" border="1" style="display: none;">
+        <!-- Table header -->
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom du Produit</th>
+                <th>Quantite en Stock</th>
+                <th>Prix Unitaire</th>
+                <th>Date de Reception</th>
+                <th>Date de Vente</th>
+                <th>Fournisseur</th>
+            </tr>
+        </thead>
+        <!-- Table body - dynamically populated with data from fruits variable -->
+        <tbody>
+            {% for fruit in fruits %}
+                <tr>
+                    <td>{{ fruit[0] }}</td>
+                    <td>{{ fruit[1] }}</td>
+                    <td>{{ fruit[2] }}</td>
+                    <td>{{ fruit[3] }}</td>
+                    <td>{{ fruit[4] }}</td>
+                    <td>{{ fruit[5] }}</td>
+                    <td>{{ fruit[6] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table id="tableLegumes" class="stock-table" border="1" style="display: none;">
+        <!-- Legumes Table content will be displayed here -->
+        <!-- Legumes Table -->
+<table id="tableLegumes" class="stock-table" border="1" style="display: none;">
+    <!-- Table header -->
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom du Produit</th>
+            <th>Quantite en Stock</th>
+            <th>Prix Unitaire</th>
+            <th>Date de Reception</th>
+            <th>Date de Vente</th>
+            <th>Fournisseur</th>
+        </tr>
+    </thead>
+    <!-- Table body - dynamically populated with data from legumes variable -->
+    <tbody>
+        {% for legume in legumes %}
+            <tr>
+                <td>{{ legume[0] }}</td>
+                <td>{{ legume[1] }}</td>
+                <td>{{ legume[2] }}</td>
+                <td>{{ legume[3] }}</td>
+                <td>{{ legume[4] }}</td>
+                <td>{{ legume[5] }}</td>
+                <td>{{ legume[6] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    </table>
+    <!-- Produits_Externes Table -->
+<table id="tableProduitsExternes" class="stock-table" border="1" style="display: none;">
+    <!-- Table header -->
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom du Produit</th>
+            <th>Quantite en Stock</th>
+            <th>Prix Unitaire</th>
+            <th>Date de Reception</th>
+            <th>Date de Vente</th>
+            <th>Fournisseur</th>
+        </tr>
+    </thead>
+    <!-- Table body - dynamically populated with data from produitsExternes variable -->
+    <tbody>
+        {% for produitExterne in produitsExternes %}
+            <tr>
+                <td>{{ produitExterne[0] }}</td>
+                <td>{{ produitExterne[1] }}</td>
+                <td>{{ produitExterne[2] }}</td>
+                <td>{{ produitExterne[3] }}</td>
+                <td>{{ produitExterne[4] }}</td>
+                <td>{{ produitExterne[5] }}</td>
+                <td>{{ produitExterne[6] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <!-- Commandes_aux_Fournisseurs Table -->
+<table id="tableCommandesFournisseurs" class="stock-table" border="1" style="display: none;">
+    <!-- Table header -->
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom du Produit</th>
+            <th>Quantite Commandee</th>
+            <th>Prix Unitaire</th>
+            <th>Prix Total</th>
+            <th>Date de Commande</th>
+            <th>Fournisseur</th>
+            <th>Date de Reception</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <!-- Table body - dynamically populated with data from commandesFournisseurs variable -->
+    <tbody>
+        {% for commandeFournisseur in commandesFournisseurs %}
+            <tr>
+                <td>{{ commandeFournisseur[0] }}</td>
+                <td>{{ commandeFournisseur[1] }}</td>
+                <td>{{ commandeFournisseur[2] }}</td>
+                <td>{{ commandeFournisseur[3] }}</td>
+                <td>{{ commandeFournisseur[4] }}</td>
+                <td>{{ commandeFournisseur[5] }}</td>
+                <td>{{ commandeFournisseur[6] }}</td>
+                <td>{{ commandeFournisseur[7] }}</td>
+                {% if commandeFournisseur[7] is none %}
+                    <td>
+                        <!-- If Date_de_Reception is None, show the button -->
+                        <button onclick="declareReception('{{ commandeFournisseur[1] }}', {{ commandeFournisseur[2] }}, this)" class="reserverbutton" >Déclarer la réception</button>
+                    </td>
+                {% else %}
+                    <td>
+                        <!-- If Date_de_Reception is not None, hide the button -->
+                        <!-- You can also add a message or handle it as needed -->
+                        La réception est déjà déclarée
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+    <script>
+        function toggleTable(tableName) {
+            var tables = document.getElementsByClassName("stock-table");
+            for (var i = 0; i < tables.length; i++) {
+                tables[i].style.display = (tables[i].id === tableName) ? "block" : "none";
+            }
+        }
+
+        function showTable(tableName) {
+            fetch(`/table/${tableName}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(tableName).innerHTML = data;
+                    addButtonsToRows(tableName); // Call the function to add buttons
+                });
+        }
+        function declareReception(productName, quantityOrdered, button) {
+    fetch(`/declare_reception/${productName}/${quantityOrdered}`, {
+        method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.result === 'success') {
+            alert('Récupération et mise à jour réussies!');
+            // Hide the button upon successful response
+            button.style.display = 'none';
+            // Add any additional logic or UI updates you need here
+        } else {
+            alert(`Erreur: ${data.message}`);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Une erreur est survenue lors de la récupération.');
+    });
+}
+
+function navigateToDeclarerVente() {
+        window.location.href = "{{ url_for('declarer_vente') }}";
+    }
+
+
+    </script>
+{% endblock %}

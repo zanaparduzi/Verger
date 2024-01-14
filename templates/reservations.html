@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+{% block content %}
+    <h2>Réservations</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ClientID</th>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Date d'Achat</th>
+                <th>Récupéré</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation[0] }}</td>
+                <td>{{ reservation[1] }}</td>
+                <td>{{ reservation[2] }}</td>
+                <td>{{ reservation[3] }}</td>
+                <td>{{ reservation[4] }}</td>
+                <td>{{ reservation[5] }}</td>
+                <td>{{ "Oui" if reservation[6] else "Non" }}</td>
+                <td>
+                    {% if not reservation[6] %}
+                        <!--
+                        <form action="/validate_recovery" method="post">
+                            <input type="hidden" name="reservation_id" value="{{ reservation[0] }}">
+                            <button type="submit">Valider la Récupération</button>
+                        </form>
+                        -->
+                        <form action="{{ url_for('validate_recovery', reservation_id=reservation[0]) }}" method="post">
+                            <button type="submit">Valider la récupération</button>
+                        </form>
+
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

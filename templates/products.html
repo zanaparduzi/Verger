@@ -1,0 +1,85 @@
+{% extends 'index.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<body>
+
+<!-- Show Fruits table -->
+<h2>Produits</h2>
+<table>
+    <tr>
+        <th>Nom du Produit</th>
+        <th>Quantité en Stock</th>
+        <th>Réserver</th>
+    </tr>
+    {% for fruit in fruits %}
+        <tr>
+            <td>{{ fruit[1] }}</td>
+            <td>{{ fruit[2] }}</td>
+            <td>
+                <form action="/reserve" method="post" class="reserverform">
+                    <input type="hidden" name="product_id" value="{{ fruit[0] }}">
+                    <input type="number" name="quantity" min="1" max="{{ fruit[2] }}" required>
+                    <button type="submit" class="reserverbutton">Réserver</button>
+                </form>
+            </td>
+        </tr>
+        {% if reservation_message and loop.last %}
+        <tr>
+            <td colspan="3">
+                <p>{{ reservation_message }}</p>
+            </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+
+    {% for legume in legumes %}
+        <tr>
+            <td>{{ legume[1] }}</td>
+            <td>{{ legume[2] }}</td>
+            <td>
+                <form action="/reserve" method="post" class="reserverform">
+                    <input type="hidden" name="product_id" value="{{ legume[0] }}">
+                    <input type="number" name="quantity" min="1" max="{{ legume[2] }}" required>
+                    <button type="submit" class="reserverbutton">Réserver</button>
+                </form>
+            </td>
+        </tr>
+        {% if reservation_message and loop.last %}
+        <tr>
+            <td colspan="3">
+                <p>{{ reservation_message }}</p>
+            </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+
+    {% for produitExterne in produitsExternes %}
+        <tr>
+            <td>{{ produitExterne[1] }}</td>
+            <td>{{ produitExterne[2] }}</td>
+            <td>
+                <form action="/reserve" method="post" class="reserverform">
+                    <input type="hidden" name="product_id" value="{{ produitExterne[0] }}">
+                    <input type="number" name="quantity" min="1" max="{{ produitExterne[2] }}" required>
+                    <button type="submit" class="reserverbutton">Réserver</button>
+                </form>
+            </td>
+        </tr>
+        {% if reservation_message and loop.last %}
+        <tr>
+            <td colspan="3">
+                <p>{{ reservation_message }}</p>
+            </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+
+
+</table>
+
+<!-- Similar blocks for Legumes and Produits_Externes tables -->
+
+</body>
+</html>
+{% endblock %}

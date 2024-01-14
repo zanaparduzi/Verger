@@ -1,0 +1,79 @@
+{% extends 'index.html' %}
+{% block content %}
+    <h2>Clients Loyaux</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>Date d'Inscription</th>
+                <th>Total des Achats</th>
+                <th>Dernière Date d'Achat</th>
+                <th>Historique des achats</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client[0] }}</td>
+                <td>{{ client[1] }}</td>
+                <td>{{ client[2] }}</td>
+                <td>{{ client[3] }}</td>
+                <td>{{ client[4] }}</td>
+                <td>{{ client[5] }}</td>
+                <td>{{ client[6] }}</td>
+                <td>{{ client[7] }}</td>
+                <td>{{ client[8] }}</td>
+                <td>
+                    <a href="{{ url_for('reservations', client_id=client[0]) }}" class="reserverbutton">Voir l'historique</a>
+                </td>
+            </tr>
+            <tr id="purchaseHistory_{{ client[0] }}" style="display: none;">
+                <td colspan="10">
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ClientID</th>
+                                <th>Produit</th>
+                                <th>Quantité</th>
+                                <th>Prix</th>
+                                <th>DateAchat</th>
+                                <th>Recupere</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in reservations %}
+                                <tr>
+                                    <td>{{ reservation[0] }}</td>
+                                    <td>{{ reservation[1] }}</td>
+                                    <td>{{ reservation[2] }}</td>
+                                    <td>{{ reservation[3] }}</td>
+                                    <td>{{ reservation[4] }}</td>
+                                    <td>{{ reservation[5] }}</td>
+                                    <td>{{ "Oui" if reservation[6] else "Non" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function togglePurchaseHistory(clientId) {
+            var purchaseHistory = document.getElementById("purchaseHistory_" + clientId);
+            if (purchaseHistory.style.display === "none") {
+                purchaseHistory.style.display = "table-row";
+            } else {
+                purchaseHistory.style.display = "none";
+            }
+        }
+    </script>
+{% endblock %}

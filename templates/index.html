@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Le Verger du Coin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Le Verger du Coin</h1>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/products">Produits</a>
+            {% if session['username'] %}
+            <a href="/logout"> Se déconnecter</a>
+            {% endif %}
+                <!-- Add more navigation items as needed -->
+            <a href='/facebook'>Facebook</a>
+        </nav>
+    </header>
+    
+    <p>Bonjour à toi et bienvenue sur notre site de réservation en ligne !</p>
+    {% block content %}{% endblock %}
+</body>
+</html>
